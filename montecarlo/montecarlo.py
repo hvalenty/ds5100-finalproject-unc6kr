@@ -122,9 +122,26 @@ class Analyzer():
     '''
     The Analyzer Class.
     '''
-    def __init__():
-        pass
+    def __init__(self, game):
+        if not isinstance(game, Game):
+            raise ValueError('Analyzer class only accepts Game objects.')
+        self.game = game
 
+    def jackpot(self):
+        '''
+        Computes number of times a game results in a jackpot.
+        Input: None
+        Output: Number of jackpots in a game (int)
+        '''
+        jackpot_count = 0
+        for index, row in self.game._df_play.iterrows():
+            if len(row.unique()) == 1:
+                jackpot_count += 1
+        return jackpot_count
+
+    def face_count_per_roll(self):
+        for index, row in self.game._df_play.iterrows():
+            print(row.value_counts(dropna=False))
 
 if __name__ == '__main__':
     '''
@@ -149,6 +166,9 @@ if __name__ == '__main__':
     die3.change_side_weight(4, 10)
     die_lister = [die1, die2, die3]
     game1 = Game(die_lister)
-    game1.play(2)
-    print(game1.show_play_results(frame_form='narrow'))
+    game1.play(20)
+    print(game1.show_play_results(frame_form='wide'))
+    any1 = Analyzer(game1)
+    print(any1.jackpot())
+    print(any1.face_count_per_roll())
     
