@@ -162,7 +162,3 @@ cython_debug/
 #.idea/
 
 # My extras
-array/
-np.array/
-pandas/
-weights/

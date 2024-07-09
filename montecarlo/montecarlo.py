@@ -85,6 +85,7 @@ class Die():
         return self._df_faces_weights.copy()
 
 
+
 class Game():
     '''
     The Game Class.
@@ -92,11 +93,30 @@ class Game():
     def __init__(self, die_list):
         self.die_list = die_list
 
-
     def play(self, times_rolled):
-        pass
+        '''
+        Save result of play in private dataframe.
+        .........................................
+        Input: Number of times the dice should be rolled (int)
+        Output: Play dataframe (private)
+            -> index: roll number
+            -> columns: die number (list index as header)
+            -> cells: face rolled in each instance
+        '''
+        roller = []
+        for die in self.die_list:
+            roller.append(die.roll_the_die(times_rolled))
+        self._df_play = pd.DataFrame(roller).T
+        
+    def show_play_results(self, frame_form = 'wide'):
+        if frame_form == 'wide':
+            return self._df_play.copy()
+        elif frame_form == 'narrow':
+            # MultiIndex with roll number and die number, respectively
+            return self._df_play.stack().copy()
+        else:
+            raise ValueError('Parameter frame_form must be set to "narrow" or "wide".')
 
-    
 
 class Analyzer():
     '''
@@ -107,6 +127,7 @@ class Analyzer():
 
 
 if __name__ == '__main__':
+    '''
     d1_faces = np.array([1,2,3,4,5,6])
     die1 = Die(d1_faces)
     d2_faces = np.array(['j','o','s','e','p','h'])
@@ -119,4 +140,15 @@ if __name__ == '__main__':
     print(die2._df_faces_weights)
     print(die2.current_state())
     print(die2.roll_the_die(10))
+    '''
+    d1_face = np.array([1,2,3,4,5,6])
+    die1 = Die(d1_face)
+    die2 = Die(d1_face)
+    die3 = Die(d1_face)
+    die3.change_side_weight(3, 10)
+    die3.change_side_weight(4, 10)
+    die_lister = [die1, die2, die3]
+    game1 = Game(die_lister)
+    game1.play(2)
+    print(game1.show_play_results(frame_form='narrow'))
     
