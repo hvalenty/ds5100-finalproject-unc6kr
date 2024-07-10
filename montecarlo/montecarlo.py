@@ -395,7 +395,7 @@ class Analyzer():
             # Sort each row to "standardize" the order of face appearance
             # thus making combinations order IN-dependent
             pal.append(sorted(row.to_list()))
-        return pd.DataFrame(pal).value_counts()
+        return pd.DataFrame(pal).value_counts().to_frame()
         
        
     def permutation_count(self):
@@ -463,6 +463,7 @@ if __name__ == '__main__':
     print(any1.face_count_per_roll())
     print(any1.combo_count())
     print(any1.permutation_count())
+    print(type(die1))
     
 
  
