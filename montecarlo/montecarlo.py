@@ -140,8 +140,97 @@ class Analyzer():
         return jackpot_count
 
     def face_count_per_roll(self):
+        #df_shell = pd.DataFrame(columns = self.game.die_list[0].faces)
+        # Empty dict and list for face counts
+        results = {}
+        big_list_csv = []
+        # Iterate over rows in game results
+        for indexer, row in self.game._df_play.iterrows():
+            # face_comp is Die faces list to match with
+            # roll_comp which is roll results list
+            face_comp = self.game.die_list[0].faces
+            roll_comp = row.to_list()
+            # Below loop counts matches between face_comp and roll_comp
+            for i in face_comp:
+                results[i] = roll_comp.count(i)
+                # appends in comma separated list form
+                big_list_csv.append(results[i]) 
+        #for indexer, row in self.game._df_play.iterrows():
+            #list_shell = row.value_counts().to_frame()
+            #df_shell.index = range(indexer)
+        # Convert list to string and clean it up
+        big_string = str(big_list_csv).replace('[', '').replace(']','').split(', ')
+        # Chunk long data string into proper form for pandas dataframe
+        big_string_lister = [big_string[x:x + len(self.game.die_list[0].faces)]\
+                for x in range(0, len(big_string), len(self.game.die_list[0].faces))]
+        #fine_df = pd.DataFrame([str(big_list_csv).split(',') for big_list_csv in len(big_list_csv)])
+        #fin_df = pd.DataFrame([sub.split(',') for sub in big_list_csv], columns=self.game.die_list[0].faces)
+        # Make the final output dataframe
+        closer = pd.DataFrame(big_string_lister, columns=self.game.die_list[0].faces)
+        #print(big_list_csv)
+        return closer
+
+
+    def combo_count(self):
+        pal = []
+        for indexer, row in self.game._df_play.iterrows():
+            pal.append(sorted(row.to_list()))
+        return pd.DataFrame(pal).value_counts()
+        
+       
+    '''
+        # Empty dict and list for face counts
+        results = {}
+        big_list_csv = []
+        # Iterate over rows in game results
+        for indexer, row in self.game._df_play.iterrows():
+            # face_comp is Die faces list to match with
+            # roll_comp which is roll results list
+            face_comp = self.game.die_list[0].faces
+            roll_comp = row.to_list()
+            # Below loop counts matches between face_comp and roll_comp
+            for i in face_comp:
+                results[i] = roll_comp.count(i)
+                # appends in comma separated list form
+                big_list_csv.append(results[i])
+        # Convert list to string and clean it up
+        big_string = str(big_list_csv).replace('[', '').replace(']','').split(', ')
+        # Chunk long data string into proper form for pandas dataframe
+        big_string_lister = [big_string[x:x + len(self.game.die_list[0].faces)]\
+                for x in range(0, len(big_string), len(self.game.die_list[0].faces))]
+                # Make the final output dataframe
+        closer = pd.DataFrame(big_string_lister, columns=self.game.die_list[0].faces)
+        #closer = closer.replace(0, np.nan, inplace=True)
+        closer = closer.replace('0', '')
+        print(big_string_lister)
+        return closer.value_counts() for row in closer
+        '''
+
+
+    def permutation_count(self):
+        '''
+        More description here.
+        .......................
+        Input: None
+        Output: pd.DataFrame
+        '''
+        return self.game._df_play.value_counts().to_frame()
+
+        '''
+        roll_dict = pd.DataFrame()
+        count = 0
         for index, row in self.game._df_play.iterrows():
-            print(row.value_counts(dropna=False))
+            roll_dict = pd.concat([roll_dict, row.value_counts().to_frame()])
+            roll_dict['indexer'] = index
+            print(index)
+        print(row.value_counts().to_frame())
+        print(roll_dict)
+        '''
+
+        #roll_dict = {}
+        #for index, row in self.game._df_play.iterrows():
+         #   roll_dict['indexer'] = index
+
 
 if __name__ == '__main__':
     '''
@@ -166,9 +255,11 @@ if __name__ == '__main__':
     die3.change_side_weight(4, 10)
     die_lister = [die1, die2, die3]
     game1 = Game(die_lister)
-    game1.play(20)
+    game1.play(8)
     print(game1.show_play_results(frame_form='wide'))
     any1 = Analyzer(game1)
     print(any1.jackpot())
     print(any1.face_count_per_roll())
+    print(any1.combo_count())
+    print(any1.permutation_count())
     
