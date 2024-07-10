@@ -173,7 +173,10 @@ class Analyzer():
 
     def combo_count(self):
         pal = []
+        # Iterate through rows of game play dataframe
         for indexer, row in self.game._df_play.iterrows():
+            # Sort each row to "standardize" the order of face appearance
+            # thus making combinations order IN-dependent
             pal.append(sorted(row.to_list()))
         return pd.DataFrame(pal).value_counts()
         
