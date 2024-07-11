@@ -50,9 +50,10 @@ class Die():
         # Check for data type within faces array (must be string or numeric)
         try:
             for val in faces:
-                assert (type(val) == np.str_) | (type(val) == np.int_) | (type(val) == np.float_)
+                assert (type(val) == np.str_) | (type(val) == np.int_) | (type(val) == np.float_)\
+                                           | (type(val) == int) | (type(val) == float) | (type(val) == str)
         except:
-            print('Faces must be data type strings or numbers.')
+            raise TypeError('Faces must be data type strings or numbers.')
         
         # Check if faces array has distinct values (must be all unique)
         try:
@@ -103,6 +104,7 @@ class Die():
         
         # Check if the input weight is a numeric type
         try:
+            #assert (type(new_weight) == np.bool_) | (type(new_weight) == np.int_) | (type(new_weight) == np.float_)
             assert isinstance(new_weight, (int, float))
             new_weight = float(new_weight)
         except:
@@ -463,7 +465,7 @@ if __name__ == '__main__':
     print(any1.face_count_per_roll())
     print(any1.combo_count())
     print(any1.permutation_count())
-    print(type(die1))
+    print(die1._df_faces_weights)
     
 
  

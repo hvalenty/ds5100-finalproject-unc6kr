@@ -6,17 +6,18 @@ import unittest
 class DieTestSuite(unittest.TestCase):
 
     def test_01_init(self):
-        # Check if die object is of Die type
+        # Check if die object is of Die type and create dataframe
         die_face = np.array([1,2,3,4,5,6])
         die = Die(die_face)
         self.assertIs(type(die), Die)
+        self.assertIs(type(die._df_faces_weights), pd.DataFrame)
 
     def test_02_change_side_weight(self):
         # Check if after weights change private 
         die_face = np.array([1,2,3,4,5,6])
         die = Die(die_face)
         die.change_side_weight(1, 100)
-        self.assertIs(type(die._df_faces_weights), pd.DataFrame)
+        self.assertEqual(die._df_faces_weights[0][1], 100)
 
     def test_03_roll_the_die(self):
         # Check if rolled return is a list
@@ -41,6 +42,7 @@ class GameTestSuite(unittest.TestCase):
         die = Die(die_face)
         die_list = [die, die, die]
         game = Game(die_list)
+        self.assertIs(type(die_list), list)
         self.assertIs(type(game), Game)
 
     def test_06_play(self):
@@ -73,6 +75,7 @@ class AnalyzerTestSuite(unittest.TestCase):
         game = Game(die_list)
         game.play(5)
         analyzer = Analyzer(game)
+        self.assertIs(type(game), Game)
         self.assertIs(type(analyzer), Analyzer)
 
     def test_09_jackpot(self):
@@ -97,7 +100,7 @@ class AnalyzerTestSuite(unittest.TestCase):
         face_count = analyzer.face_count_per_roll()
         self.assertIs(type(face_count), pd.DataFrame)
 
-    def test_11_combo_counts(self):
+    def test_11_combo_count(self):
         # Check if combo counts returns dataframe
         die_face = np.array([1,2,3,4,5,6])
         die = Die(die_face)
@@ -108,7 +111,7 @@ class AnalyzerTestSuite(unittest.TestCase):
         combine_count = analyzer.combo_count()
         self.assertIs(type(combine_count), pd.DataFrame)
 
-    def test_12_permutation_counts(self):
+    def test_12_permutation_count(self):
         # Check if combo counts returns dataframe
         die_face = np.array([1,2,3,4,5,6])
         die = Die(die_face)
@@ -118,3 +121,7 @@ class AnalyzerTestSuite(unittest.TestCase):
         analyzer = Analyzer(game)
         permute_count = analyzer.permutation_count()
         self.assertIs(type(permute_count), pd.DataFrame)
+
+
+if __name__ == '__main__':
+    unittest.main(verbosity=3)
