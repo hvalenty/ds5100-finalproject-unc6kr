@@ -6,7 +6,41 @@ Final project as culmination of summer DS5100 class.
 * Project Name: Monte Carlo Simulator
 
 ## Synopsis
+Thr Monte Carlo Simulator allows users to create dice, play a game, and analyze a game. The three classes include methods that suppport these functions and provide information on the class objects created. 
 
+To import this module and necessary packages:
+```python
+from monetcarlo import Die, Game, Analyzer
+import numpy as np
+import pandas as pd
+```
+Once the module is imported, die objects can be created. Dies must be formed using a NumPy array of faces.
+```python
+face_list = np.array(1,2,3,4,5,6)
+die = Die(face_list)
+```
+One Die method is to view the current state of the die. That can be accomplished using the current_state function.
+```python
+die.current_state()
+```
+Now that a die has been made it can be used to play a game. A game object is created using a list of one or more dice.
+```python
+die_list = [die, die, die]
+game = Game(die_list)
+```
+One Game method is the play function. This rolls the die within a game for a number of rolls specified by the user.
+```python
+game.play(5)
+```
+To analyze a game it is necessary to use the Analyzer class. This class accepts a game and has methods to provide statistical information on the game played.
+```python
+analyzer = Analyzer(game)
+```
+A method to use for an analyzer object is the face_count_per_roll functon. This returns a dataframe with the results of rolls performed.
+```python
+analyzer.face_count_per_roll()
+```
+More methods are available within the three classes, and are described further in the API Documentation.
 
 ## API Description
 This module contains three classes:
