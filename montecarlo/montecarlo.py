@@ -341,39 +341,6 @@ class Analyzer():
         closer = pd.DataFrame(big_string_lister, columns=self.game.die_list[0]._df_faces_weights.index)
         return closer
 
-        '''
-        #df_shell = pd.DataFrame(columns = self.game.die_list[0].faces)
-        # Empty dict and list for face counts
-        results = {}
-        big_list_csv = []
-        # Iterate over rows in game results
-        for indexer, row in self.game._df_play.iterrows():
-            # face_comp is Die faces list to match with
-            # roll_comp which is roll results list
-            face_comp = self.game.die_list[0].faces
-            roll_comp = row.to_list()
-            # Below loop counts matches between face_comp and roll_comp
-            for i in face_comp:
-                results[i] = roll_comp.count(i)
-                # appends in comma separated list form
-                big_list_csv.append(results[i]) 
-        #for indexer, row in self.game._df_play.iterrows():
-            #list_shell = row.value_counts().to_frame()
-            #df_shell.index = range(indexer)
-        # Convert list to string and clean it up
-        big_string = str(big_list_csv).replace('[', '').replace(']','').split(', ')
-        # Chunk long data string into proper form for pandas dataframe
-        big_string_lister = [big_string[x:x + len(self.game.die_list[0].faces)]\
-                for x in range(0, len(big_string), len(self.game.die_list[0].faces))]
-        #fine_df = pd.DataFrame([str(big_list_csv).split(',') for big_list_csv in len(big_list_csv)])
-        #fin_df = pd.DataFrame([sub.split(',') for sub in big_list_csv], columns=self.game.die_list[0].faces)
-        # Make the final output dataframe
-        closer = pd.DataFrame(big_string_lister, columns=self.game.die_list[0].faces)
-        #print(big_list_csv)
-        return closer
-        '''
-
-
     def combo_count(self):
         '''
         Compute distinct combinations (order-independent) of faces
@@ -399,7 +366,6 @@ class Analyzer():
             pal.append(sorted(row.to_list()))
         return pd.DataFrame(pal).value_counts().to_frame()
         
-       
     def permutation_count(self):
         '''
         Compute distinct permutations (order-dependent) of faces
@@ -419,37 +385,10 @@ class Analyzer():
         '''
         return self.game._df_play.value_counts().to_frame()
 
-        '''
-        roll_dict = pd.DataFrame()
-        count = 0
-        for index, row in self.game._df_play.iterrows():
-            roll_dict = pd.concat([roll_dict, row.value_counts().to_frame()])
-            roll_dict['indexer'] = index
-            print(index)
-        print(row.value_counts().to_frame())
-        print(roll_dict)
-        '''
-
-        #roll_dict = {}
-        #for index, row in self.game._df_play.iterrows():
-         #   roll_dict['indexer'] = index
 
 
 if __name__ == '__main__':
-    '''
-    d1_faces = np.array([1,2,3,4,5,6])
-    die1 = Die(d1_faces)
-    d2_faces = np.array(['j','o','s','e','p','h'])
-    die2 = Die(d2_faces)
-    print(type('j'))
-    die2.change_side_weight('o',3)
-    print(die2._df_faces_weights)
-    print(die2.weights)
-    die2.change_side_weight('e',3)
-    print(die2._df_faces_weights)
-    print(die2.current_state())
-    print(die2.roll_the_die(10))
-    '''
+
     d1_face = np.array([1,2,3,4,5,6])
     die1 = Die(d1_face)
     die2 = Die(d1_face)
