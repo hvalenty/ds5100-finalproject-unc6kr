@@ -1,8 +1,8 @@
 from setuptools import setup
 
 setup(
-    name='ds5100-finalproject-unc6kr',
-    version='0.1',
+    name='Monte Carlo',
+    version='1.0.0',
     description='Package for game monte carlo simulations.',
     url='https://github.com/hvalenty/ds5100-finalproject-unc6kr',
     author='H. Valenty',
