@@ -62,14 +62,14 @@ class Die():
             raise ValueError('The faces array must have distinct values.')
         
         # Initalize with input faces array 
-        self.faces = faces
+        #self.faces = faces
 
         # Initalize weights with array of ones
         weights = np.ones(len(faces))
-        self.weights = weights
+        #self.weights = weights
 
         # Save faces and weights arrays in a private dataframe
-        self._df_faces_weights = pd.DataFrame(self.weights, self.faces)
+        self._df_faces_weights = pd.DataFrame(weights, faces)
         
 
     def change_side_weight(self, face_value, new_weight):
@@ -98,7 +98,7 @@ class Die():
         '''
         # Check the input face is in the die faces array
         try:
-            assert face_value in self.faces
+            assert face_value in self._df_faces_weights.index
         except: 
             raise IndexError('This face is not present in the die array.')
         
@@ -138,7 +138,7 @@ class Die():
         # Roll the die using sampling with replacement
         rolled = self._df_faces_weights.sample(n = num_roll, 
                                         replace = True,
-                                        weights = self.weights)
+                                        weights = self._df_faces_weights[0])
         return rolled.index.to_list()
         
 

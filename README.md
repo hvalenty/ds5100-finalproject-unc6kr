@@ -73,8 +73,6 @@ This module contains three classes:
             Array is initalized to all ones, but can
             be changed with method following initalization.
         
-        _df_faces_weights: np.DataFrame
-            Private attribute dataframe to save die faces and weights.
         Returns
         -------
         None
@@ -118,7 +116,7 @@ This module contains three classes:
 
 * current_state(self)
 
-        Return a copy of die dataframe with faces and weights
+        Return a dataframe with faces and weights
         
         Returns
         -------
@@ -156,14 +154,6 @@ This module contains three classes:
         times_rolled: int
             Specify the number of times the dice should be rolled.
 
-        Changes
-        -------
-        _df_play: pd.DataFrame
-            Private attribute dataframe in wide format.
-            Index: roll number
-            Columns: die number (list index as header)
-            Cells: face rolled in each instance
-
         Returns
         -------
         None
@@ -181,7 +171,7 @@ This module contains three classes:
         Returns
         -------
         pd.DataFrame()
-            Private attribute dataframe in wide or narrow format.
+            Dataframe in wide or narrow format.
             Index: roll number
             Columns: die number (list index as header)
             Cells: face rolled in each instance
