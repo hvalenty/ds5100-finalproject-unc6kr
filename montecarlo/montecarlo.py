@@ -325,7 +325,7 @@ class Analyzer():
         for indexer, row in self.game._df_play.iterrows():
             # face_comp is Die faces list to match with
             # roll_comp which is roll results list
-            face_comp = self.game.die_list[0].faces
+            face_comp = self.game.die_list[0]._df_faces_weights.index
             roll_comp = row.to_list()
             # Below loop counts matches between face_comp and roll_comp
             for i in face_comp:
@@ -335,10 +335,10 @@ class Analyzer():
         # Convert list to string and clean it up
         big_string = str(big_list_csv).replace('[', '').replace(']','').split(', ')
         # Chunk long data string into proper form for pandas dataframe
-        big_string_lister = [big_string[x:x + len(self.game.die_list[0].faces)]\
-                for x in range(0, len(big_string), len(self.game.die_list[0].faces))]
+        big_string_lister = [big_string[x:x + len(self.game.die_list[0]._df_faces_weights.index)]\
+                for x in range(0, len(big_string), len(self.game.die_list[0]._df_faces_weights.index))]
         # Make the final output dataframe
-        closer = pd.DataFrame(big_string_lister, columns=self.game.die_list[0].faces)
+        closer = pd.DataFrame(big_string_lister, columns=self.game.die_list[0]._df_faces_weights.index)
         return closer
 
         '''

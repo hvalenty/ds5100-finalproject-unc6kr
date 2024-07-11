@@ -53,6 +53,7 @@ class GameTestSuite(unittest.TestCase):
         game = Game(die_list)
         game.play(5)
         self.assertIs(type(game._df_play), pd.DataFrame)
+        self.assertEqual(len(game._df_play.index), 5)
 
     def test_07_show_play_results(self):
         # Check if show play returns dataframe
