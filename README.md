@@ -10,7 +10,7 @@ Thr Monte Carlo Simulator allows users to create dice, play a game, and analyze 
 
 To import this module and necessary packages:
 ```python
-from monetcarlo import Die, Game, Analyzer
+from montecarlo import Die, Game, Analyzer
 import numpy as np
 import pandas as pd
 ```
@@ -57,7 +57,7 @@ This module contains three classes:
     be changed following the creation of a die object. The one behavior
     of a die is that it can be rolled one or more times.
 
-* __init__(self, faces)    
+* \__init__(self, faces)    
 
         Initalize the Die class.
 
@@ -131,7 +131,7 @@ This module contains three classes:
     play a game (roll all dice set number of times), and they only keep
     the results of their most recent play.
 
-* __init__(self, die_list)
+* \__init__(self, die_list)
 
         Initalize the Game class.
 
@@ -182,7 +182,7 @@ This module contains three classes:
     results of a single game and computes various descriptive
     statistical properties.
 
-* __init__(self, game)
+* \__init__(self, game)
 
         Initalize the Analyzer class.
 
